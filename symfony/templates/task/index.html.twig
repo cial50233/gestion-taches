@@ -4,8 +4,23 @@
     <title>Mes tâches</title>
 </head>
 <body>
-    <h1>Ma première page Symfony 🚀</h1>
 
-    <p>Docker + Symfony + PostgreSQL fonctionnent !</p>
+    <h1>Liste des tâches</h1>
+
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task.name }}
+
+                {% if task.completed %}
+                    ✅
+                {% else %}
+                    ❌
+                {% endif %}
+            </li>
+        {% else %}
+            <li>Aucune tâche pour le moment</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
