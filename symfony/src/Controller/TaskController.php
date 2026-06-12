@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Task;
+use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 final class TaskController extends AbstractController
 {
@@ -33,5 +35,29 @@ final class TaskController extends AbstractController
         $entityManager->flush();
 
         return new Response('Tâche créée !');
+    }
+
+    #[Route('/task/new', name: 'app_task_new')]
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $task = new Task();
+
+        $form = $this->createForm(TaskType::class, $task);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($task);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_task');
+        }
+
+        return $this->render('task/new.html.twig', [
+            'form' => $form,
+        ]);
     }
 }
