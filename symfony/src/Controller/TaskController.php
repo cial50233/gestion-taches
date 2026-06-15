@@ -60,4 +60,16 @@ final class TaskController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/task/{id}/complete', name: 'app_task_complete')]
+    public function complete(
+        Task $task,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $task->setCompleted(true);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_task');
+    }
 }

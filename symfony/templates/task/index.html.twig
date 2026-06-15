@@ -16,6 +16,9 @@
                     ✅
                 {% else %}
                     ❌
+                    <a href="{{ path('app_task_complete', {'id': task.id}) }}">
+                        Terminer
+                    </a>
                 {% endif %}
             </li>
         {% else %}
