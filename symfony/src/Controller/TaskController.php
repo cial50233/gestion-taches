@@ -69,4 +69,27 @@ final class TaskController extends AbstractController
 
         return $this->redirectToRoute('app_task');
     }
+
+    #[Route('/task/{id}/edit', name: 'app_task_edit')]
+    public function edit(
+        Task $task,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $form = $this->createForm(TaskType::class, $task);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_task');
+        }
+
+        return $this->render('task/edit.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
 }
