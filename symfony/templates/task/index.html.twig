@@ -14,10 +14,19 @@
 
                 {% if task.completed %}
                     ✅
+
+                    <a href="{{ path('app_task_delete', {'id': task.id}) }}">
+                        Supprimer
+                    </a>
+
                 {% else %}
                     ❌
                     <a href="{{ path('app_task_complete', {'id': task.id}) }}">
                         Terminer
+                    </a>
+                    
+                    <a href="{{ path('app_task_delete', {'id': task.id}) }}">
+                        Supprimer
                     </a>
                 {% endif %}
             </li>

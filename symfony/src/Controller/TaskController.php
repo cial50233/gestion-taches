@@ -16,25 +16,11 @@ final class TaskController extends AbstractController
     #[Route('/task', name: 'app_task')]
     public function index(TaskRepository $taskRepository): Response
     {
-        $tasks = $taskRepository->findAll();
+        $tasks = $taskRepository->findBy([], ['id' => 'ASC']);
 
         return $this->render('task/index.html.twig', [
             'tasks' => $tasks,
         ]);
-    }
-    
-    #[Route('/task/create', name: 'app_task_create')]
-    public function create(EntityManagerInterface $entityManager): Response
-    {
-        $task = new Task();
-
-        $task->setName('Apprendre Symfony');
-        $task->setCompleted(false);
-
-        $entityManager->persist($task);
-        $entityManager->flush();
-
-        return new Response('Tâche créée !');
     }
 
     #[Route('/task/new', name: 'app_task_new')]
@@ -68,6 +54,17 @@ final class TaskController extends AbstractController
     ): Response {
         $task->setCompleted(true);
 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_task');
+    }
+
+    #[Route('/task/{id}/delete', name: 'app_task_delete')]
+    public function delete(
+        Task $task,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $entityManager->remove($task);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_task');
