@@ -1,67 +1,63 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Mes tâches</title>
+{% extends 'base.html.twig' %}
 
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-	</head>
-	<body>
+{% block title %}
+	Liste des tâches
+{% endblock %}
 
-		<div class="container mt-4">
+{% block body %}
+	<div class="container mt-4">
+		<h1>Liste des tâches</h1>
 
-			<h1>Liste des tâches</h1>
-			<p>
-				<a href="{{ path('app_task_new') }}" class="btn btn-primary">
-					Nouvelle tâche
-				</a>
-			</p>
+		<p>
+			<a href="{{ path('app_task_new') }}" class="btn btn-primary">
+				Nouvelle tâche
+			</a>
+		</p>
 
 
-			{% for task in tasks %}
-				<div class="card mb-3">
-					<div class="card-body">
+		{% for task in tasks %}
+			<div class="card mb-3">
+				<div class="card-body">
 
-						<h5 class="card-title">
-							{{ task.name }}
+					<h5 class="card-title">
+						{{ task.name }}
 
-							{% if task.completed %}
-								✅
-							{% else %}
-								❌
-							{% endif %}
-						</h5>
-						<div class="mt-3">
+						{% if task.completed %}
+							✅
+						{% else %}
+							❌
+						{% endif %}
+					</h5>
+					<div class="mt-3">
 
-							<a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-warning btn-sm">
-								Modifier
+						<a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-warning btn-sm">
+							Modifier
+						</a>
+
+						<a href="{{ path('app_task_delete', {'id': task.id}) }}" class="btn btn-danger btn-sm">
+							Supprimer
+						</a>
+
+						{% if not task.completed %}
+
+							<a href="{{ path('app_task_complete', {'id': task.id}) }}" class="btn btn-success btn-sm">
+								Terminer
 							</a>
 
-							<a href="{{ path('app_task_delete', {'id': task.id}) }}" class="btn btn-danger btn-sm">
-								Supprimer
-							</a>
-
-							{% if not task.completed %}
-
-								<a href="{{ path('app_task_complete', {'id': task.id}) }}" class="btn btn-success btn-sm">
-									Terminer
-								</a>
-
-							{% endif %}
-
-						</div>
-
+						{% endif %}
 
 					</div>
+
+
 				</div>
+			</div>
 
 
-			{% else %}
-				<div class="alert alert-info">
-					Aucune tâche pour le moment
-				</div>
-			{% endfor %}
+		{% else %}
+			<div class="alert alert-info">
+				Aucune tâche pour le moment
+			</div>
+		{% endfor %}
 
-		</div>
-	</body>
-</html>
+	</div>
+{% endblock %}

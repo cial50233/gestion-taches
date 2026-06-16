@@ -1,9 +1,28 @@
-<h1>Nouvelle tâche</h1>
+{% extends 'base.html.twig' %}
 
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{% block title %}
+	Nouvelle tâche
+{% endblock %}
 
-    <button type="submit">
-        Enregistrer
-    </button>
-{{ form_end(form) }}
+{% block body %}
+
+	<div class="container mt-4">
+
+		<div class="card mb-3">
+
+			<h2>Nouvelle tâche</h2>
+
+			{{ form_start(form) }}
+			{{ form_widget(form) }}
+
+			<button type="submit" class="btn btn-success btn-sm">
+
+				Enregistrer
+			</button>
+
+			{{ form_end(form) }}
+
+		</div>
+	</div>
+
+{% endblock %}
