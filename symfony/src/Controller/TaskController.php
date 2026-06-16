@@ -39,6 +39,11 @@ final class TaskController extends AbstractController
             $entityManager->persist($task);
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Tâche créée avec succès !'
+            );
+
             return $this->redirectToRoute('app_task');
         }
 
@@ -56,6 +61,11 @@ final class TaskController extends AbstractController
 
         $entityManager->flush();
 
+        $this->addFlash(
+            'success',
+            'Tâche terminée !'
+        );
+
         return $this->redirectToRoute('app_task');
     }
 
@@ -66,6 +76,11 @@ final class TaskController extends AbstractController
     ): Response {
         $entityManager->remove($task);
         $entityManager->flush();
+
+        $this->addFlash(
+            'success',
+            'Tâche supprimée avec succès !'
+        );
 
         return $this->redirectToRoute('app_task');
     }
@@ -84,6 +99,11 @@ final class TaskController extends AbstractController
 
             $entityManager->flush();
 
+            $this->addFlash(
+                'success',
+                'Tâche modifiée avec succès !'
+            );
+
             return $this->redirectToRoute('app_task');
         }
 
@@ -91,5 +111,4 @@ final class TaskController extends AbstractController
             'form' => $form,
         ]);
     }
-
 }
