@@ -16,7 +16,10 @@ final class TaskController extends AbstractController
     #[Route('/task', name: 'app_task')]
     public function index(TaskRepository $taskRepository): Response
     {
-        $tasks = $taskRepository->findBy([], ['id' => 'ASC']);
+        $tasks = $taskRepository->findBy(
+            ['owner' => $this->getUser()],
+            ['id' => 'ASC']
+        );
 
         return $this->render('task/index.html.twig', [
             'tasks' => $tasks,
@@ -35,6 +38,8 @@ final class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $task->setOwner($this->getUser());
 
             $entityManager->persist($task);
             $entityManager->flush();
