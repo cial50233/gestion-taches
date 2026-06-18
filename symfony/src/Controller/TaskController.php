@@ -62,6 +62,11 @@ final class TaskController extends AbstractController
         Task $task,
         EntityManagerInterface $entityManager
     ): Response {
+
+        if ($task->getOwner() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $task->setCompleted(true);
 
         $entityManager->flush();
@@ -79,6 +84,11 @@ final class TaskController extends AbstractController
         Task $task,
         EntityManagerInterface $entityManager
     ): Response {
+
+        if ($task->getOwner() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $entityManager->remove($task);
         $entityManager->flush();
 
@@ -96,6 +106,11 @@ final class TaskController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
+
+        if ($task->getOwner() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
