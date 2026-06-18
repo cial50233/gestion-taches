@@ -18,7 +18,7 @@ final class TaskController extends AbstractController
     {
         $tasks = $taskRepository->findBy(
             ['owner' => $this->getUser()],
-            ['id' => 'ASC']
+            ['createdAt' => 'DESC']
         );
 
         return $this->render('task/index.html.twig', [
