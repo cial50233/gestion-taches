@@ -21,8 +21,13 @@ final class TaskController extends AbstractController
             ['createdAt' => 'DESC']
         );
 
+        $taskCount = $taskRepository->countByOwner(
+            $this->getUser()
+        );
+
         return $this->render('task/index.html.twig', [
             'tasks' => $tasks,
+            'taskCount' => $taskCount,
         ]);
     }
 

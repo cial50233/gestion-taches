@@ -6,7 +6,11 @@
 
 {% block body %}
 	<div class="container mt-4">
-		<h1>Liste des tâches</h1>
+		<h1>
+			Liste des tâches ({{ taskCount }}
+			tâche{{ taskCount > 1 ? 's' : '' }})
+		</h1>
+
 
 		<p>
 			<a href="{{ path('app_task_new') }}" class="btn btn-primary">
