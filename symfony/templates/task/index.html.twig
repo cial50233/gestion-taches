@@ -43,9 +43,10 @@
 							Modifier
 						</a>
 
-						<a href="{{ path('app_task_delete', {'id': task.id}) }}" class="btn btn-danger btn-sm">
+						<a href="{{ path('app_task_delete', {'id': task.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')">
 							Supprimer
 						</a>
+
 
 						{% if not task.completed %}
 
