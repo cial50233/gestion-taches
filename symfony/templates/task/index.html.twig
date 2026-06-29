@@ -35,6 +35,13 @@
 					<p class="text-muted small mb-2">
 						📅 Créée le
 						{{ task.createdAt|date('d/m/Y à H:i') }}
+						{% if task.updatedAt %}
+							<p class="text-muted small mb-2">
+								✏️ Modifiée le
+								{{ task.updatedAt|date('d/m/Y à H:i') }}
+							</p>
+						{% endif %}
+
 					</p>
 
 					<div class="mt-3">
