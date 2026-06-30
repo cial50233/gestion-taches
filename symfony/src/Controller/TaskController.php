@@ -73,7 +73,6 @@ final class TaskController extends AbstractController
         }
 
         $task->setCompleted(true);
-        $task->setUpdatedAt(new \DateTimeImmutable());
 
         $entityManager->flush();
 
@@ -123,7 +122,6 @@ final class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $task->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->flush();
 
             $this->addFlash(
