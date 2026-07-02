@@ -10,6 +10,7 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use App\Security\Voter\TaskVoter;
 
 final class TaskController extends AbstractController
 {
@@ -68,9 +69,7 @@ final class TaskController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
 
-        if ($task->getOwner() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted(TaskVoter::COMPLETE, $task);
 
         $task->setCompleted(true);
 
@@ -90,9 +89,7 @@ final class TaskController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
 
-        if ($task->getOwner() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted(TaskVoter::DELETE, $task);
 
         $entityManager->remove($task);
         $entityManager->flush();
@@ -112,9 +109,7 @@ final class TaskController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
 
-        if ($task->getOwner() !== $this->getUser()) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted(TaskVoter::EDIT, $task);
 
         $form = $this->createForm(TaskType::class, $task);
 
